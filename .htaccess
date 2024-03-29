@@ -1,0 +1,32 @@
+# HTID:21409861: DO NOT REMOVE OR MODIFY THIS LINE AND THE LINES BELOW
+php_value display_errors 1
+# DO NOT REMOVE OR MODIFY THIS LINE AND THE LINES ABOVE HTID:21409861:
+
+# .htaccess of PTDXOP Official Website
+RewriteEngine On
+
+# Match URL's with www and rewrite it to https without the www
+RewriteCond %{HTTP_HOST} ^(www\.)(.*) [NC]
+RewriteRule (.*) https://%2%{REQUEST_URI} [L,R=301]
+
+# Remove .html extension
+RewriteCond %{THE_REQUEST} /([^.]+)\.html [NC]
+RewriteRule ^ /%1 [NC,L,R]
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^ %{REQUEST_URI}.html [NC,L]
+
+# Default index page
+DirectoryIndex home.html
+
+# Redirect to 404
+ErrorDocument 404 /404ptdxop.html
+
+# To specify video & audio extension
+AddType video/webm .webm
+AddType audio/ogg .ogg
+
+# Set up 60 Second caching on commonly updated files
+# <filesMatch ".(xml|txt|html|js|css)$">
+# ExpiresDefault A60
+# Header append Cache-Control "private, must-revalidate"
+# </filesMatch>
